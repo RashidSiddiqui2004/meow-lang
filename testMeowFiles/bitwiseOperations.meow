@@ -1,0 +1,6 @@
+meowstart 
+    meow a = 2;
+    meow b = 4;
+    meow res = a | b;
+    purr(res);
+meowend
