@@ -3,7 +3,8 @@ package lexer
 import (
 	"unicode"
 )
- 
+
+// Token represents a lexical token.
 type Token struct {
 	Type    TokenType
 	Literal string
@@ -12,14 +13,14 @@ type Token struct {
 // Lexer holds the state of the lexer.
 type Lexer struct {
 	input   string
-	pos     int  // current position in input  
-	readPos int  // current reading position in input  
+	pos     int  // current position in input (points to current char)
+	readPos int  // current reading position in input (after current char)
 	ch      byte // current character under examination
 }
 
-// NewLexer initializes a new instance of Lexer with the source code
-func NewLexer(sourceCode string) *Lexer {
-	l := &Lexer{input: sourceCode}
+// NewLexer initializes a new instance of Lexer with the input string.
+func NewLexer(input string) *Lexer {
+	l := &Lexer{input: input}
 	l.readChar()
 	return l
 }
@@ -35,7 +36,7 @@ func (l *Lexer) readChar() {
 	l.readPos++
 }
 
-// peekChar returns the next character  
+// peekChar returns the next character without advancing the lexer.
 func (l *Lexer) peekChar() byte {
 	if l.readPos >= len(l.input) {
 		return 0
@@ -107,7 +108,8 @@ func (l *Lexer) NextToken() Token {
 			tok.Type = NUMBER
 			tok.Literal = l.readNumber()
 			return tok
-		} else { 
+		} else {
+			// For unknown characters, create an EOF token to avoid getting stuck.
 			tok = newToken(EOF, "")
 		}
 	}
@@ -115,14 +117,25 @@ func (l *Lexer) NextToken() Token {
 	l.readChar()
 	return tok
 }
- 
+
+// newToken creates a new token of a given type and literal.
 func newToken(tokenType TokenType, ch string) Token {
 	return Token{Type: tokenType, Literal: ch}
 }
 
-// skipWhitespace advances the lexer past any whitespace characters.
 func (l *Lexer) skipWhitespace() {
-	for l.ch == ' ' || l.ch == '\t' || l.ch == '\n' || l.ch == '\r' {
+	for l.ch == ' ' || l.ch == '\t' || l.ch == '\n' || l.ch == '\r' || l.ch == '~' {
+		if l.ch == '~' {
+			l.skipComment()
+		} else {
+			l.readChar()
+		}
+	}
+}
+
+// skipComment advances the lexer until the end of the current line.
+func (l *Lexer) skipComment() {
+	for l.ch != '\n' && l.ch != 0 {
 		l.readChar()
 	}
 }
@@ -156,15 +169,18 @@ func (l *Lexer) readNumber() string {
 }
 
 // readString reads a string literal, assuming the current character is a double quote.
+// This updated version consumes the closing quote.
 func (l *Lexer) readString() string {
-	position := l.pos + 1
+	position := l.pos + 1 // skip the starting quote
 	for {
 		l.readChar()
 		if l.ch == '"' || l.ch == 0 {
 			break
 		}
 	}
-	return l.input[position:l.pos]
+	str := l.input[position:l.pos]
+	l.readChar() // consume the closing quote
+	return str
 }
 
 // lookupIdent checks if an identifier is a reserved keyword and returns the appropriate TokenType.

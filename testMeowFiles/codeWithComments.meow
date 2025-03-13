@@ -1,0 +1,9 @@
+meowstart 
+    ~ declaring variables
+    meow a = 10;
+    meow b = 20;
+    ~ storing sum of a and b in res
+    meow res = a + b;
+    ~ printing result
+    purr(res);
+meowend

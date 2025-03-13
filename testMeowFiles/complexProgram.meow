@@ -1,0 +1,41 @@
+meowstart
+
+    ~ This is a complex MeowLang program demonstrating multiple features.
+
+    ~ Declare variables
+    meow x = 42;
+    meow y = 15;
+    meow z = x + y;
+    
+    ~ Print the sum
+    purr("Sum of x and y: ");
+    purr(z);
+
+    ~ Bitwise operations
+    meow bitwise_and = x & y;
+    meow bitwise_or = x | y;
+    meow bitwise_xor = x ^ y;
+    meow bitwise_shift_left = x << 2;
+    meow bitwise_shift_right = y >> 1;
+
+    ~ Print bitwise results
+    purr("Bitwise AND: ");
+    purr(bitwise_and);
+
+    purr("Bitwise OR: ");
+    purr(bitwise_or);
+
+    purr("Bitwise XOR: ");
+    purr(bitwise_xor);
+
+    purr("Left Shift x by 2: ");
+    purr(bitwise_shift_left);
+
+    purr("Right Shift y by 1: ");
+    purr(bitwise_shift_right);
+
+    ~ String handling
+    meow greeting = "Hello, MeowLang!";
+    purr(greeting); 
+    
+meowend

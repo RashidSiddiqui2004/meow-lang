@@ -36,7 +36,7 @@ func main() {
 		}
 	}
 
-	fmt.Println("Tokens:", tokens)
+	// fmt.Println("Tokens:", tokens)
 
 	p := parser.NewParser(tokens)
 	p.Parse()
