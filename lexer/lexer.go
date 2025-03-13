@@ -4,7 +4,6 @@ import (
 	"unicode"
 )
 
-// Token represents a lexical token.
 type Token struct {
 	Type    TokenType
 	Literal string
@@ -13,8 +12,8 @@ type Token struct {
 // Lexer holds the state of the lexer.
 type Lexer struct {
 	input   string
-	pos     int  // current position in input (points to current char)
-	readPos int  // current reading position in input (after current char)
+	pos     int  // current position in input
+	readPos int  // current reading position in input
 	ch      byte // current character under examination
 }
 
@@ -25,7 +24,6 @@ func NewLexer(input string) *Lexer {
 	return l
 }
 
-// readChar reads the next character and advances the positions.
 func (l *Lexer) readChar() {
 	if l.readPos >= len(l.input) {
 		l.ch = 0 // ASCII code for NUL, signifies end of file
@@ -169,9 +167,8 @@ func (l *Lexer) readNumber() string {
 }
 
 // readString reads a string literal, assuming the current character is a double quote.
-// This updated version consumes the closing quote.
 func (l *Lexer) readString() string {
-	position := l.pos + 1 // skip the starting quote
+	position := l.pos + 1
 	for {
 		l.readChar()
 		if l.ch == '"' || l.ch == 0 {
@@ -179,7 +176,7 @@ func (l *Lexer) readString() string {
 		}
 	}
 	str := l.input[position:l.pos]
-	l.readChar() // consume the closing quote
+	l.readChar()
 	return str
 }
 
