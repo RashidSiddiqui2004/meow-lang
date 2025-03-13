@@ -1,6 +1,7 @@
 # 🐱 MeowLang - The Purrfect Programming Language 😸
 
 Welcome to **MeowLang**, the cutest and funniest programming language inspired by kittens! 🐾  
+
 MeowLang allows you to declare variables, perform calculations, and print results in an adorable, cat-themed syntax.  
 
 ---
@@ -30,14 +31,14 @@ MeowLang allows you to declare variables, perform calculations, and print result
 
 🐱 Basic Structure
 
-Every MeowLang program starts with "Hi Kitty" and ends with "Bye Kitty".
+Every MeowLang program starts with "meowstart" and ends with "meowend".
 
 ```
-Hi Kitty
+meowstart
     meow x = 10;
     meow y = 20;
     purr(x + y);
-Bye Kitty
+meowend
 ```
 
 🐾 Variable Declaration
